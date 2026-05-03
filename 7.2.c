@@ -3,42 +3,30 @@
 #include <time.h>
 
 #define N 10
-
 // Заповнення масиву випадковими числами [-100;100]
 void fillArray(int arr[], int n) {
-    int i;
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
         arr[i] = rand() % 201 - 100;
-    }
 }
-
-// Виведення масиву
+// Заповнення масиву випадковими числами [-100;100]
 void printArray(int arr[], int n) {
-    int i;
-    for (i = 0; i < n; i++) {
-        printf("%4d", arr[i]);
-    }
+    for (int i = 0; i < n; i++)
+        printf("%4d ", arr[i]);
     printf("\n");
 }
-
 // Пошук мінімального елемента
 int findMin(int arr[], int n) {
-    int i, min = arr[0];
-
-    for (i = 1; i < n; i++) {
-        if (arr[i] < min) {
+    int min = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] < min)
             min = arr[i];
-        }
-    }
-
     return min;
 }
-
 // Сума елементів між першим і другим від’ємними
 int sumBetweenNegatives(int arr[], int n) {
-    int i, first = -1, second = -1, sum = 0;
+    int first = -1, second = -1, sum = 0;
 
-    for (i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         if (arr[i] < 0) {
             if (first == -1)
                 first = i;
@@ -49,31 +37,36 @@ int sumBetweenNegatives(int arr[], int n) {
         }
     }
 
-    if (first != -1 && second != -1) {
-        for (i = first + 1; i < second; i++) {
+    if (first != -1 && second != -1)
+        for (int i = first + 1; i < second; i++)
             sum += arr[i];
-        }
-    }
+    else
+        printf("Немає двох від’ємних!\n");
 
     return sum;
 }
-
 int main() {
     int arr[N];
-    int min, sum;
+    int choice;
+    srand(time(NULL)); //генератор випадкових чисел
 
-    srand(time(NULL));
+    while (1) {
+        printf("\n1-Старт  0-Вихід: ");
+        scanf("%d", &choice);
 
-    fillArray(arr, N);
-
-    printf("Масив:\n");
-    printArray(arr, N);
-
-    min = findMin(arr, N);
-    sum = sumBetweenNegatives(arr, N);
-
-    printf("Мінімальний елемент: %d\n", min);
-    printf("Сума між першим і другим від’ємними: %d\n", sum);
+        if (choice == 1) {
+            fillArray(arr, N);
+            printArray(arr, N);
+            printf("Мін: %d\n", findMin(arr, N));
+            printf("Сума: %d\n", sumBetweenNegatives(arr, N));
+        }
+        else if (choice == 0) {
+            break;
+        }
+        else {
+            printf("Помилка!\n");
+        }
+    }
 
     return 0;
 }
