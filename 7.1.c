@@ -1,32 +1,50 @@
 #include <stdio.h>
 
-int main() {
-    int i, j, simple;
+// Функція перевірки, чи число просте
+int isPrime(int n) {
+    if (n < 2)
+        return 0;
 
-    for (i = 2; i <= 98; i++) {   // до 98, бо перевіряємо i і i+2
-        simple = 1;
-        for (j = 2; j * j <= i; j++) {
-            if (i % j == 0) {
-                simple = 0;
-                break;
-            }
-        }
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+// Функція для виводу пар "близнюків"
+void findTwins(int start, int end) {
+    printf("Пари простих чисел-близнюків:\n");
 
-        if (simple) {
-            // перевірка чи i+2 просте
-            simple = 1;
-            for (j = 2; j * j <= i + 2; j++) {
-                if ((i + 2) % j == 0) {
-                    simple = 0;
-                    break;
-                }
-            }
-
-            if (simple) {
-                printf("%d і %d\n", i, i + 2);
-            }
+    for (int i = start; i <= end - 2; i++) {
+        if (isPrime(i) && isPrime(i + 2)) {
+            printf("(%d, %d)\n", i, i + 2);
         }
     }
+}
+int main() {
+    int choice;
+
+    do {
+        printf("\n=== МЕНЮ ===\n");
+        printf("1. Знайти всі пари близнюків на [0, 100]\n");
+        printf("0. Вихід\n");
+        printf("Ваш вибір: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                findTwins(0, 100);
+                break;
+
+            case 0:
+                printf("Вихід з програми...\n");
+                break;
+
+            default:
+                printf("Невірний вибір! Спробуйте ще раз.\n");
+        }
+
+    } while (choice != 0);
 
     return 0;
 }
